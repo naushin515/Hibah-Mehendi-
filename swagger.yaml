@@ -1,0 +1,265 @@
+openapi: 3.0.0
+info:
+  title: Hibah Mehendi Store API Documentation
+  description: Detailed API reference for authentications, categories, products, and order management.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+    description: Local development server
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+                - mobile
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                mobile:
+                  type: string
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Invalid input or user already exists
+
+  /auth/login:
+    post:
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successful and returns token
+        '401':
+          description: Invalid email or password
+
+  /auth/profile:
+    get:
+      summary: Get user profile details
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User profile retrieved
+    put:
+      summary: Update user profile
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                mobile:
+                  type: string
+                address:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                pincode:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Profile updated
+
+  /categories:
+    get:
+      summary: Get all categories
+      responses:
+        '200':
+          description: List of categories
+    post:
+      summary: Create a category (Admin)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Category created
+
+  /products:
+    get:
+      summary: Get all products
+      responses:
+        '200':
+          description: List of products
+    post:
+      summary: Create a product with image upload (Admin)
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - price
+                - categoryId
+                - stock
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                discountedPrice:
+                  type: number
+                categoryId:
+                  type: string
+                stock:
+                  type: integer
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '201':
+          description: Product created
+
+  /orders:
+    post:
+      summary: Create a new order
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderItems:
+                  type: array
+                  items:
+                    type: object
+                shippingAddress:
+                  type: object
+                paymentMethod:
+                  type: string
+                itemsPrice:
+                  type: number
+                shippingPrice:
+                  type: number
+                discountPrice:
+                  type: number
+                totalPrice:
+                  type: number
+      responses:
+        '201':
+          description: Order created
+    get:
+      summary: Get all orders (Admin)
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: List of all orders
+
+  /orders/myorders:
+    get:
+      summary: Get logged-in user's orders
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: List of user's orders
+
+  /orders/{id}:
+    get:
+      summary: Get order by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order details returned
+
+  /orders/{id}/tracking:
+    put:
+      summary: Update order tracking status (Admin)
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+              properties:
+                status:
+                  type: string
+                  enum: [Placed, Processing, Packed, Shipped, Out For Delivery, Delivered]
+      responses:
+        '200':
+          description: Tracking status updated
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
