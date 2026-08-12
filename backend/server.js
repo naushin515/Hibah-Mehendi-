@@ -23,6 +23,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
   'https://hibah-mehendi-svqe.vercel.app',
+  'https://hibah-mehendi-svqe-git-main-naushin515s-projects.vercel.app',
   process.env.CORS_ORIGIN,
 ].filter(Boolean);
 app.use(cors({
