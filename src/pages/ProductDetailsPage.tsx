@@ -126,7 +126,7 @@ export default function ProductDetailsPage() {
               <Heart className={cn('mr-1 h-4 w-4', isInWishlist(product.id) && 'fill-red-500 text-red-500')} />
               {isInWishlist(product.id) ? 'Wishlisted' : 'Wishlist'}
             </Button>
-            <ShareProduct product={product} />
+            <ShareProduct title={product.name} slug={product.slug} />
           </div>
 
           <div className="mt-6 rounded-xl border border-stone-200 p-4 dark:border-stone-700">
