@@ -21,6 +21,7 @@ export interface Product {
   category: string
   categorySlug: string
   price: number
+  discountedPrice?: number
   compareAtPrice?: number
   festivalPrice?: number
   images: ProductImage[]
@@ -64,6 +65,7 @@ export interface User {
   state?: string
   pincode?: string
   isAdmin?: boolean
+  role?: string
 }
 
 export type OrderStatus =
