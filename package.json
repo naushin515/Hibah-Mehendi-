@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "hibah-mehendi-store",
   "private": true,
   "version": "1.0.0",
@@ -69,4 +68,4 @@
     "nodemon": "^3.1.9"
   }
 }
->>>>>>> 81245da0a07d8f960513ccd3b62293ef53092741
+
