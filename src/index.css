@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --color-brand-50: #fdf8f4;
+  --color-brand-100: #f9ede3;
+  --color-brand-200: #f2d9c4;
+  --color-brand-300: #e8bf9a;
+  --color-brand-400: #d99a6b;
+  --color-brand-500: #c97847;
+  --color-brand-600: #b05f32;
+  --color-brand-700: #924a28;
+  --color-brand-800: #773d24;
+  --color-brand-900: #623420;
+  --color-surface-light: #ffffff;
+  --color-surface-muted: #faf7f4;
+  --color-surface-dark: #141210;
+  --color-surface-dark-muted: #1c1917;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans antialiased bg-surface-muted text-stone-800 dark:bg-surface-dark dark:text-stone-100;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .container-app {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
