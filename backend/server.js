@@ -20,10 +20,11 @@ app.use(helmet());
 
 // Allow both 5173 and 5174
 const allowedOrigins = [
-  process.env.CORS_ORIGIN || 'http://localhost:5173',
   'http://localhost:5173',
   'http://localhost:5174',
-];
+  'https://hibah-mehendi-svqe.vercel.app',
+  process.env.CORS_ORIGIN,
+].filter(Boolean);
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) callback(null, true);
