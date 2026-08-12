@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles, MessageCircle } from 'lucide-react'
 import { useProducts, useBanner } from '../context'
-import ProductCard from '../components/product/ProductCard'
+//import ProductCard from '../components/product/ProductCard'
 import CategoryCard from '../components/shop/CategoryCard'
 import Button from '../components/ui/Button'
 
 export default function HomePage() {
-  const { products, categories } = useProducts()
+  const { products} = useProducts()
   const { banner } = useBanner()
 
   const featured = products.filter((p) => p.isFeatured).slice(0, 8)
